@@ -105,7 +105,7 @@ span {
 
 .temp_opt,
 .wind_speed,
-precip {
+.precip {
   font-size: 0.9rem;
   color: hsl(0, 0%, 75%);
   margin-top: 1rem;
