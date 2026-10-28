@@ -1,0 +1,1429 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: hsl(243, 96%, 9%);
+}
+
+.content_card {
+  min-height: 95vh;
+  width: 80vw;
+  background-color: hsl(243, 96%, 9%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: "DM Sans", sans-serif;
+}
+
+.navbar {
+  height: 6.5vh;
+  width: 75vw;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  height: 6vh;
+  width: 17vw;
+  background-image: url("assets/images/logo.svg");
+  background-position: center;
+  background-size: cover;
+}
+
+.units {
+  height: 4vh;
+  width: 7.5vw;
+  background-color: hsl(243, 23%, 24%);
+  border-radius: 0.4rem;
+  color: hsl(250, 6%, 84%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.unit_symbol {
+  height: 2.2vh;
+  width: 1.3vw;
+  background-image: url("assets/images/icon-units.svg");
+  background-position: center;
+  background-size: cover;
+}
+
+span {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  font-family: "DM Sans", sans-serif;
+}
+
+.drop_symbol {
+  height: 1.5vh;
+  width: 0.7vw;
+  background-image: url("assets/images/icon-dropdown.svg");
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  cursor: pointer;
+}
+
+.drop_div {
+  height: 1.5vh;
+  width: 0.7vw;
+  background-image: url("assets/images/icon-dropdown.svg");
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
+}
+
+.menu_div {
+  display: none;
+  position: absolute;
+  top: 10%;
+  right: 12.5%;
+  width: 11vw;
+  padding: 1rem;
+  background-color: hsl(243, 23%, 24%);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.imperial {
+  font-size: 1rem;
+  color: hsl(0, 0%, 100%);
+}
+
+.temp_opt,
+.wind_speed,
+precip {
+  font-size: 0.9rem;
+  color: hsl(0, 0%, 75%);
+  margin-top: 1rem;
+}
+
+.val {
+  font-size: 1rem;
+  margin-top: 1rem;
+  padding: 0.3rem 0.3rem 0.3rem 0.3rem;
+  color: hsl(0, 0%, 100%);
+  border-radius: 0.3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.check {
+  height: 1.7vh;
+  width: 1.2vw;
+  background-image: url("assets/images/icon-checkmark.svg");
+  background-size: cover;
+  background-position: center;
+}
+
+.val:focus {
+  background-color: hsl(243, 23%, 30%);
+}
+
+.val:hover {
+  background-color: hsl(243, 23%, 30%);
+}
+
+.wind_speed,
+.precip {
+  margin-top: 1rem;
+  border-top: 1px solid hsl(0, 0%, 75%);
+  padding-top: 0.5rem;
+}
+
+.menu_div.show_menu {
+  display: block;
+}
+
+h1 {
+  font-size: 3rem;
+  color: hsl(0, 0%, 100%);
+  margin-top: 1rem;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 500;
+}
+
+.search_div {
+  height: 5.2vh;
+  width: 35vw;
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: hsl(243, 96%, 9%);
+}
+
+.search_div2 {
+  height: 5.2vh;
+  width: 29vw;
+  border-radius: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: hsl(243, 23%, 24%);
+}
+
+.search_icon {
+  height: 5vh;
+  width: 3vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sr_icon {
+  height: 3vh;
+  width: 1.7vw;
+  background-image: url("assets/images/icon-search.svg");
+  background-position: center;
+  background-size: cover;
+}
+
+.search {
+  height: 5vh;
+  width: 25vw;
+  color: hsl(0, 0%, 100%);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.search::placeholder {
+  color: hsl(0, 0%, 75%);
+  opacity: 1;
+}
+
+.search:focus {
+  outline: none;
+}
+
+.search_btn {
+  height: 5.4vh;
+  width: 6vw;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: 1rem;
+  margin-left: 1rem;
+  color: hsl(250, 6%, 84%);
+  background-color: hsl(233, 67%, 56%);
+  cursor: pointer;
+}
+
+.search_dropdown {
+  display: none;
+  width: 27vw;
+  z-index: 1;
+  top: 29.5%;
+  border-radius: 0.5rem;
+  right: 39.5%;
+  padding: 0.5rem;
+  background-color: hsl(243, 23%, 24%);
+  color: hsl(0, 0%, 100%);
+  position: absolute;
+}
+
+.place {
+  padding: 0.5rem 0.3rem;
+  font-size: 0.8rem;
+  border-radius: 0.3rem;
+  color: hsl(0, 0%, 100%);
+}
+
+.place:hover {
+  background-color: hsl(243, 23%, 30%);
+}
+
+.place:focus {
+  background-color: hsl(243, 23%, 30%);
+}
+
+.search_dropdown.show_menu {
+  display: block;
+}
+
+.grid_card {
+  height: 67vh;
+  width: 75vw;
+  margin-top: 1.3rem;
+  display: grid;
+  grid-template-columns: 2.5fr 1.3fr;
+  grid-template-rows: 0.7fr 0.4fr 0.6fr;
+  column-gap: 1rem;
+  row-gap: 1rem;
+}
+
+.card_one {
+  grid-row: 1/2;
+  grid-column: 1/2;
+  border-radius: 1rem;
+  background-image: url("assets/images/bg-today-large.svg");
+  background-position: center;
+  background-size: cover;
+  background-color: lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.city {
+  height: 8vh;
+  min-width: 18vw;
+  margin-left: 1rem;
+}
+
+.city_name {
+  font-weight: 700;
+  color: hsl(0, 0%, 100%);
+  font-size: 1.2rem;
+}
+
+.date_today {
+  color: hsl(250, 6%, 84%);
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.temp {
+  height: 11vh;
+  width: 16vw;
+  margin-right: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.climate_img_main {
+  height: 10vh;
+  width: 3.5vw;
+  background-image: url("assets/images/icon-sunny.webp");
+  background-position: center;
+  margin-left: 1rem;
+  background-size: cover;
+}
+
+.deg_main {
+  height: 11vh;
+  min-width: 10vw;
+  font-size: 3.5rem;
+  font-family: "DM Sans", sans-serif;
+  font-style: italic;
+  font-weight: 600;
+  color: hsl(0, 0%, 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card_two {
+  grid-row: 1/4;
+  grid-column: 2/3;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: hsl(243, 23%, 24%);
+}
+
+.card_two_topic {
+  height: 5vh;
+  width: 24vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hourly_forecast {
+  height: 3.5vh;
+  width: 12vw;
+  margin-left: 1.25rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: hsl(0, 0%, 100%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.day_div {
+  height: 4vh;
+  width: 7.5vw;
+  border-radius: 0.5rem;
+  margin-right: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: hsl(243, 23%, 30%);
+}
+
+.day_name {
+  height: 3vh;
+  width: 6vw;
+  font-weight: 600;
+  margin-right: 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: hsl(0, 0%, 100%);
+}
+
+.drop_div_menu {
+  display: none;
+  position: absolute;
+  width: 12vw;
+  top: 40%;
+  right: 14%;
+  padding: 0.5rem;
+  border-radius: 0.6rem;
+  border: 1px solid hsl(240, 6%, 70%);
+  background-color: hsl(243, 23%, 24%);
+}
+
+.weekday {
+  font-size: 1rem;
+  color: hsl(0, 0%, 100%);
+  padding: 0.6rem 0.2rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tick {
+  height: 1.6vh;
+  width: 1.2vw;
+  background-image: url("assets/images/icon-checkmark.svg");
+  background-size: cover;
+  background-position: center;
+}
+
+.weekday:focus {
+  background-color: hsl(243, 23%, 30%);
+}
+
+.weekday:hover {
+  background-color: hsl(243, 23%, 30%);
+}
+
+.drop_div_menu.show_menu {
+  display: block;
+}
+
+.time_container {
+  height: 56vh;
+  width: 23vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.pm {
+  height: 5.6vh;
+  width: 21vw;
+  border-radius: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: hsl(243, 23%, 30%);
+}
+
+.hehe {
+  height: 5.5vh;
+  width: 5.7vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hour_time {
+  height: 4vh;
+  min-width: 3vw;
+  color: hsl(0, 0%, 100%);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weather_img_div {
+  height: 3.2vh;
+  width: 2.5vw;
+  margin-left: 0.4rem;
+}
+
+.hour_deg {
+  height: 4vh;
+  width: 3vw;
+  color: hsl(0, 0%, 100%);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card_three {
+  grid-row: 2/3;
+  grid-column: 1/2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.box {
+  height: 14vh;
+  width: 11.3vw;
+  background-color: hsl(243, 23%, 24%);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.box_title {
+  height: 5vh;
+  width: 9vw;
+  border-radius: 1rem 1rem 0 0;
+  font-weight: 600;
+  color: hsl(240, 6%, 70%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.box_value {
+  height: 9vh;
+  width: 9vw;
+  border-radius: 0 0 1rem 1rem;
+  font-size: 2rem;
+  color: hsl(0, 0%, 100%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.card_four {
+  grid-row: 3/4;
+  grid-column: 1/2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.daily_forcast {
+  height: 4.5vh;
+  width: 50vw;
+  color: hsl(0, 0%, 100%);
+  font-size: 1rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.forecast {
+  margin-left: 0.3rem;
+  margin-bottom: 0.4rem;
+}
+
+.forcast_div {
+  height: 16.5vh;
+  width: 50vw;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.day {
+  height: 16vh;
+  width: 6.5vw;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: hsl(243, 23%, 24%);
+}
+
+.day_two {
+  height: 5vh;
+  width: 5vw;
+  color: hsl(0, 0%, 100%);
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.day_climate_img {
+  height: 4.3vh;
+  width: 3.4vw;
+  margin-top: 0.2rem;
+  margin-bottom: 0.5rem;
+  background-position: center;
+  background-size: cover;
+}
+
+.degree_div {
+  min-height: 4vh;
+  width: 100%;
+  color: hsl(0, 0%, 100%);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.deg_div_one {
+  font-size: 0.9rem;
+  white-space: nowrap;
+  margin-left: 0.5rem;
+}
+
+.deg_div_two {
+  font-size: 0.8rem;
+  white-space: nowrap;
+  color: hsl(240, 5%, 65%);
+  margin-right: 0.5rem;
+}
+
+/* media queries for mobile and small tabets */
+
+@media (max-width: 48rem) {
+  body {
+    height: auto;
+    min-height: 100vh;
+    align-items: center;
+  }
+
+  .content_card {
+    width: 98%;
+    min-height: 100vh;
+  }
+
+  .navbar {
+    width: 100%;
+    height: auto;
+    min-height: 3rem;
+    margin-top: 1rem;
+  }
+
+  .logo {
+    height: 2rem;
+    width: 8rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left center;
+  }
+
+  .units {
+    width: auto;
+    min-height: 2rem;
+    padding: 0 0.4rem;
+    gap: 0.3rem;
+  }
+
+  .unit_symbol {
+    height: 1.2rem;
+    width: 1.2rem;
+  }
+
+  .drop_symbol,
+  .drop_div {
+    height: 0.7rem;
+    width: 0.7rem;
+  }
+
+  .menu_div {
+    top: 4rem;
+    right: 4%;
+    width: 10rem;
+    z-index: 5;
+  }
+
+  h1 {
+    width: 70vw;
+    font-size: 2rem;
+    letter-spacing: 0.1rem;
+    word-spacing: 0.3rem;
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  .search_div {
+    width: 100%;
+    height: auto;
+    gap: 0.5rem;
+    flex-direction: column;
+    margin-top: 1.5rem;
+  }
+
+  .search_div2 {
+    width: 90vw;
+    min-width: 0;
+    flex: 1;
+    height: 2.5rem;
+  }
+
+  .search_icon {
+    width: 2.5rem;
+    height: 3rem;
+    flex-shrink: 0;
+  }
+
+  .sr_icon {
+    height: 1.2rem;
+    width: 1.2rem;
+  }
+
+  .search {
+    width: 90vw;
+    min-width: 0;
+    height: 2.5rem;
+    font-size: 1rem;
+  }
+
+  .search_btn {
+    width: 90vw;
+    height: 2.5rem;
+    margin-left: 0;
+    flex-shrink: 0;
+  }
+
+  .search_dropdown.show_menu {
+    display: none;
+  }
+
+  .grid_card {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .card_one {
+    width: 100%;
+    background-image: url("assets/images/bg-today-small.svg");
+    background-position: center;
+    background-size: cover;
+    min-height: 10rem;
+    box-sizing: border-box;
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+
+  .city {
+    height: auto;
+    min-width: 0;
+    margin-left: 0;
+    flex: 1;
+  }
+
+  .city_name {
+    font-size: 1rem;
+  }
+
+  .date_today {
+    margin-left: 0;
+    font-size: 0.8rem;
+  }
+
+  .temp {
+    height: auto;
+    width: auto;
+    margin-right: 0;
+    gap: 0.3rem;
+  }
+
+  .climate_img_main {
+    height: 3.5rem;
+    width: 3.5rem;
+    margin-left: 0;
+    flex-shrink: 0;
+  }
+
+  .deg_main {
+    height: auto;
+    min-width: 0;
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  .card_two {
+    order: 4;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1rem 0.5rem;
+    min-height: 30rem;
+  }
+
+  .card_two_topic {
+    width: 100%;
+    height: auto;
+    min-height: 3rem;
+    gap: 0.5rem;
+  }
+
+  .hourly_forecast {
+    width: auto;
+    height: auto;
+    margin-left: 0.5rem;
+    font-size: 1rem;
+    flex: 1;
+  }
+
+  .day_div {
+    width: auto;
+    min-width: 6rem;
+    height: 2.5rem;
+    margin-right: 0.5rem;
+    padding: 0 0.4rem;
+    box-sizing: border-box;
+  }
+
+  .day_name {
+    width: auto;
+    height: auto;
+    font-size: 0.8rem;
+    margin-right: 0.3rem;
+  }
+
+  .drop_div_menu {
+    width: 8rem;
+    top: 221%;
+    right: 12%;
+    z-index: 10;
+  }
+
+  .weekday {
+    font-size: 0.9rem;
+  }
+
+  .tick,
+  .check {
+    height: 0.8rem;
+    width: 0.8rem;
+  }
+
+  .time_container {
+    width: 100%;
+    height: auto;
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+
+  .pm {
+    width: 95%;
+    height: 3.5rem;
+    box-sizing: border-box;
+    padding: 0 0.5rem;
+  }
+
+  .hehe {
+    width: 5rem;
+    height: 3rem;
+  }
+
+  .hour_time {
+    width: auto;
+    min-width: 3rem;
+    height: auto;
+    font-size: 0.8rem;
+  }
+
+  .weather_img_div {
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-left: 0.3rem;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .hour_deg {
+    width: 3rem;
+    height: auto;
+    font-size: 0.9rem;
+  }
+
+  .card_three {
+    order: 2;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+  }
+
+  .box {
+    width: 100%;
+    height: 7rem;
+    box-sizing: border-box;
+    align-items: flex-start;
+    padding: 0.8rem;
+  }
+
+  .box_title {
+    width: 100%;
+    height: auto;
+    font-size: 0.9rem;
+  }
+
+  .box_value {
+    width: 100%;
+    height: auto;
+    flex: 1;
+    font-size: 1.7rem;
+  }
+
+  .card_four {
+    order: 3;
+    width: 100%;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .daily_forcast {
+    width: 100%;
+    height: auto;
+    min-height: 2rem;
+    font-size: 1rem;
+  }
+
+  .forecast {
+    margin: 0;
+  }
+
+  .forcast_div {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.6rem;
+  }
+
+  .day {
+    width: 100%;
+    height: 8.5rem;
+    box-sizing: border-box;
+    border-radius: 0.7rem;
+  }
+
+  .day_two {
+    width: 100%;
+    height: 2rem;
+    font-size: 0.8rem;
+  }
+
+  .day_climate_img {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .degree_div {
+    width: 20vw;
+    gap: 0.2rem;
+  }
+
+  .deg_div_one,
+  .deg_div_two {
+    font-size: 0.8rem;
+    margin: 0;
+  }
+}
+
+@media (min-width: 48.0625rem) and (max-width: 62rem) {
+  body {
+    height: auto;
+    min-height: 100vh;
+    align-items: flex-start;
+  }
+
+  .content_card {
+    width: 92vw;
+    min-height: 100vh;
+  }
+
+  .navbar,
+  .grid_card {
+    width: 90vw;
+  }
+
+  .logo {
+    width: 20vw;
+  }
+
+  .units {
+    width: 12vw;
+    height: 4.5vh;
+  }
+
+  .unit_symbol {
+    height: 2.5vh;
+    width: 1.7vw;
+  }
+
+  .drop_symbol,
+  .drop_div {
+    width: 1.2vw;
+  }
+
+  .menu_div {
+    width: 18vw;
+    right: 5%;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  .search_div {
+    width: 65vw;
+    height: 7vh;
+  }
+
+  .search_div2 {
+    width: 55vw;
+    height: 7vh;
+  }
+
+  .search_icon {
+    /* height: 4.5vh; */
+    width: 5vw;
+  }
+
+  .sr_icon {
+    height: 4vh;
+    width: 2.5vw;
+  }
+
+  .search {
+    width: 45vw;
+    height: 7vh;
+  }
+
+  .search_btn {
+    width: 12vw;
+    height: 6.8vh;
+  }
+
+  .search_dropdown {
+    width: 50vw;
+    right: 31%;
+    top: 32%;
+  }
+
+  .grid_card {
+    height: auto;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-rows: 23vh 15vh 28vh;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .card_one {
+    padding: 0 0.5rem;
+  }
+
+  .city {
+    min-width: 0;
+    margin-left: 0.5rem;
+  }
+
+  .city_name {
+    font-size: 1rem;
+  }
+
+  .date_today {
+    font-size: 0.8rem;
+    margin-left: 0;
+  }
+
+  .temp {
+    width: 15vw;
+    margin-right: 0;
+  }
+
+  .climate_img_main {
+    width: 4vw;
+    margin-left: 0;
+  }
+
+  .deg_main {
+    min-width: 8vw;
+    font-size: 2rem;
+  }
+
+  .card_two {
+    grid-row: 1 / 4;
+    grid-column: 2 / 3;
+    padding: 0.5rem 0;
+  }
+
+  .card_two_topic {
+    width: 100%;
+  }
+
+  .hourly_forecast {
+    width: auto;
+    /* height: 4vh; */
+    margin-left: 0.7rem;
+    font-size: 1rem;
+  }
+
+  .day_div {
+    width: 10vw;
+    margin-right: 0.5rem;
+  }
+
+  .day_name {
+    width: auto;
+    font-size: 0.8rem;
+  }
+
+  .drop_div_menu {
+    width: 18vw;
+    top: 45%;
+    right: 6%;
+  }
+
+  .time_container {
+    width: 95%;
+    height: 55vh;
+  }
+
+  .pm {
+    width: 95%;
+  }
+
+  .hehe {
+    width: 15vw;
+  }
+
+  .weather_img_div {
+    width: 7vw;
+    height: 3vh;
+  }
+
+  .hour_time {
+    width: 15vw;
+  }
+
+  .hour_deg {
+    width: 5vw;
+  }
+
+  .card_three {
+    flex-wrap: wrap;
+    /* gap: 0.5rem; */
+  }
+
+  .box {
+    width: 12.6vw;
+    height: 14vh;
+  }
+
+  .box_title,
+  .box_value {
+    width: 8vw;
+  }
+
+  .box_title {
+    font-size: 0.8rem;
+  }
+
+  .box_value {
+    font-size: 1.2rem;
+  }
+
+  .daily_forcast,
+  .forcast_div {
+    width: 100%;
+  }
+
+  .day {
+    width: 7vw;
+  }
+
+  .day_two {
+    width: 100%;
+    font-size: 0.8rem;
+  }
+
+  .day_climate_img {
+    width: 4vw;
+  }
+
+  .deg_div_one {
+    font-size: 0.7rem;
+    margin-left: 0.2rem;
+  }
+
+  .deg_div_two {
+    font-size: 0.6rem;
+    margin-right: 0.2rem;
+  }
+}
+
+@media screen and (min-width: 62.0625rem) and (max-width: 70rem) {
+  body {
+    height: auto;
+    min-height: 100vh;
+    align-items: flex-start;
+  }
+
+  .content_card {
+    width: 90vw;
+    min-height: 95vh;
+  }
+
+  .navbar,
+  .grid_card {
+    width: 85vw;
+  }
+
+  .logo {
+    width: 20vw;
+  }
+
+  .units {
+    width: 11vw;
+  }
+
+  .unit_symbol {
+    width: 1.5vw;
+  }
+
+  .drop_symbol,
+  .drop_div {
+    width: 0.8vw;
+  }
+
+  .menu_div {
+    width: 20vw;
+    right: 7.5%;
+  }
+
+  h1 {
+    font-size: 2.7rem;
+  }
+
+  .search_div {
+    width: 45vw;
+  }
+
+  .search_div2 {
+    width: 36vw;
+  }
+
+  .search_icon {
+    width: 4vw;
+  }
+
+  .sr_icon {
+    width: 1.8vw;
+  }
+
+  .search {
+    width: 28vw;
+  }
+
+  .search_btn {
+    width: 7vw;
+  }
+
+  .search_dropdown {
+    width: 34vw;
+    right: 36.7%;
+  }
+
+  .grid_card {
+    height: auto;
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    grid-template-rows: 12rem auto auto;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .card_one {
+    min-width: 0;
+    padding: 0 0.5rem;
+  }
+
+  .city {
+    min-width: 0;
+    margin-left: 0.5rem;
+  }
+
+  .city_name {
+    font-size: 1.1rem;
+  }
+
+  .date_today {
+    font-size: 0.85rem;
+    margin-left: 0;
+  }
+
+  .temp {
+    min-width: 0;
+    width: 40%;
+    margin-right: 0.3rem;
+  }
+
+  .climate_img_main {
+    width: 3.5vw;
+    min-width: 2rem;
+    margin-left: 0;
+  }
+
+  .deg_main {
+    min-width: 0;
+    font-size: 2.7rem;
+  }
+
+  .card_two {
+    grid-row: 1 / 4;
+    grid-column: 2 / 3;
+    min-width: 0;
+    padding: 0.5rem 0;
+  }
+
+  .card_two_topic {
+    width: 100%;
+  }
+
+  .hourly_forecast {
+    width: auto;
+    margin-left: 0.6rem;
+    font-size: 1rem;
+  }
+
+  .day_div {
+    width: 8vw;
+    margin-right: 0.5rem;
+  }
+
+  .day_name {
+    width: auto;
+    font-size: 0.85rem;
+  }
+
+  .drop_div_menu {
+    width: 13vw;
+    right: 8%;
+  }
+
+  .time_container {
+    width: 94%;
+    height: 68vh;
+  }
+
+  .pm {
+    width: 95%;
+    height: 7vh;
+  }
+
+  .hehe {
+    width: 35%;
+  }
+
+  .weather_img_div {
+    width: 4vw;
+    height: 4vh;
+  }
+
+  .hour_time {
+    min-width: 0;
+    font-size: 0.85rem;
+  }
+
+  .hour_deg {
+    width: 3.5vw;
+    min-width: 2rem;
+    font-size: 0.8rem;
+  }
+
+  .card_three {
+    min-width: 0;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.6rem;
+  }
+
+  .box {
+    width: calc((100% - 1.8rem) / 4);
+    min-width: 0;
+    height: 7.5rem;
+    border-radius: 0.8rem;
+  }
+
+  .box_title,
+  .box_value {
+    width: 85%;
+  }
+
+  .box_title {
+    font-size: 0.8rem;
+  }
+
+  .box_value {
+    font-size: 1.5rem;
+  }
+
+  .card_four {
+    min-width: 0;
+  }
+
+  .daily_forcast,
+  .forcast_div {
+    width: 100%;
+  }
+
+  .forcast_div {
+    gap: 0.5rem;
+  }
+
+  .day {
+    width: calc((100% - 3rem) / 7);
+    min-width: 0;
+  }
+
+  .day_two {
+    width: 100%;
+    font-size: 0.8rem;
+  }
+
+  .day_climate_img {
+    width: 3vw;
+    min-width: 1.5rem;
+  }
+
+  .deg_div_one {
+    font-size: 0.75rem;
+    margin-left: 0.2rem;
+  }
+
+  .deg_div_two {
+    font-size: 0.7rem;
+    margin-right: 0.2rem;
+  }
+}
