@@ -1,4 +1,3 @@
-
 const dropSymbol = document.querySelector(".drop_symbol");
 const dropdiv = document.querySelector(".drop_div");
 const menuDiv = document.querySelector(".menu_div");
@@ -25,6 +24,9 @@ let hourlyForecast = null;
 let selectedTempUnit = "celsius";
 let selectedSpeedUnit = "kmh";
 let selectedPrecipUnit = "mm";
+
+const weatherCache = new Map();
+let latestRequest = 0;
 
 const todayDate = new Date();
 
@@ -284,45 +286,64 @@ async function weather() {
 
   if (!city) return;
 
+  const requestId = ++latestRequest;
+
+  const cacheKey =
+    `${city.toLowerCase()}-${selectedTempUnit}-${selectedSpeedUnit}-${selectedPrecipUnit}`;
+
   try {
-    cityName.textContent = "Loading weather...";
+    let data;
+    let location;
 
-    const geoUrl =
-      `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`;
+    if (weatherCache.has(cacheKey)) {
+      ({ data, location } = weatherCache.get(cacheKey));
+    } else {
+      cityName.textContent = "Loading...";
 
-    const geoResponse = await fetch(geoUrl);
+      const geoUrl =
+        `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`;
 
-    if (!geoResponse.ok) {
-      throw new Error("Could not find the city.");
+      const geoResponse = await fetch(geoUrl);
+
+      if (!geoResponse.ok) {
+        throw new Error("Unable to find city.");
+      }
+
+      const geoData = await geoResponse.json();
+
+      if (!geoData.results?.length) {
+        if (requestId === latestRequest) {
+          cityName.textContent = "City not found";
+        }
+        return;
+      }
+
+      location = geoData.results[0];
+
+      const apiUrl =
+        `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}` +
+        `&longitude=${location.longitude}` +
+        `&current=temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,precipitation,apparent_temperature` +
+        `&hourly=temperature_2m,weather_code` +
+        `&daily=weather_code,temperature_2m_max,temperature_2m_min` +
+        `&temperature_unit=${selectedTempUnit}` +
+        `&wind_speed_unit=${selectedSpeedUnit}` +
+        `&precipitation_unit=${selectedPrecipUnit}` +
+        `&timezone=auto&forecast_days=7`;
+
+      const response = await fetch(apiUrl);
+
+      if (!response.ok) {
+        throw new Error("Unable to load weather.");
+      }
+
+      data = await response.json();
+
+      weatherCache.set(cacheKey, { data, location });
     }
 
-    const geoData = await geoResponse.json();
+    if (requestId !== latestRequest) return;
 
-    if (!geoData.results || geoData.results.length === 0) {
-      cityName.textContent = "City not found";
-      return;
-    }
-
-    const location = geoData.results[0];
-
-    const apiUrl =
-      `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}` +
-      `&longitude=${location.longitude}` +
-      `&current=temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,precipitation,apparent_temperature` +
-      `&hourly=temperature_2m,weather_code` +
-      `&daily=weather_code,temperature_2m_max,temperature_2m_min` +
-      `&temperature_unit=${selectedTempUnit}` +
-      `&wind_speed_unit=${selectedSpeedUnit}` +
-      `&precipitation_unit=${selectedPrecipUnit}` +
-      `&timezone=auto&forecast_days=7`;
-
-    const response = await fetch(apiUrl);
-
-    if (!response.ok) {
-      throw new Error("Could not load weather data.");
-    }
-
-    const data = await response.json();
     const current = data.current;
 
     mainDegree.textContent =
@@ -373,8 +394,10 @@ async function weather() {
       `${current.relative_humidity_2m}%`;
 
   } catch (error) {
-    console.error("Weather error:", error);
-    cityName.textContent = "Weather unavailable";
+    if (requestId === latestRequest) {
+      console.error("Weather error:", error);
+      cityName.textContent = "Weather unavailable";
+    }
   }
 }
 
