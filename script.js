@@ -1,3 +1,4 @@
+
 const dropSymbol = document.querySelector(".drop_symbol");
 const dropdiv = document.querySelector(".drop_div");
 const menuDiv = document.querySelector(".menu_div");
@@ -115,7 +116,9 @@ tempVal.forEach((option) => {
   option.addEventListener("click", () => {
     const unit = option.textContent.trim().toLowerCase();
 
-    selectedTempUnit = unit.includes("f") ? "fahrenheit" : "celsius";
+    selectedTempUnit = unit.includes("f")
+      ? "fahrenheit"
+      : "celsius";
 
     if (searchInput.value.trim()) {
       weather();
@@ -148,7 +151,9 @@ precipVal.forEach((option) => {
     const unit = option.textContent.trim().toLowerCase();
 
     selectedPrecipUnit =
-      unit.includes("inch") || unit.includes("(in)") || unit === "in"
+      unit.includes("inch") ||
+      unit.includes("(in)") ||
+      unit === "in"
         ? "inch"
         : "mm";
 
@@ -196,15 +201,17 @@ function showHourlyForecast(selectedDay) {
     .filter((item) => {
       const date = item.time.slice(0, 10);
 
-      const weekday = new Date(`${date}T12:00:00`).toLocaleDateString("en-US", {
-        weekday: "long",
-      });
+      const weekday = new Date(`${date}T12:00:00`)
+        .toLocaleDateString("en-US", {
+          weekday: "long",
+        });
 
       return weekday.toLowerCase() === selectedDay.trim().toLowerCase();
     });
 
   hourlyCards.forEach((card, index) => {
     const item = matchingHours[index];
+
     const timeElement = card.querySelector(".hour_time");
     const tempElement = card.querySelector(".hour_deg");
     const iconElement = card.querySelector(".weather_img_div");
@@ -218,14 +225,16 @@ function showHourlyForecast(selectedDay) {
 
     const hour24 = Number(item.time.slice(11, 13));
     const hour12 = hour24 % 12 || 12;
+    const period = hour24 >= 12 ? "PM" : "AM";
 
-    timeElement.textContent = `${hour12} PM`;
+    timeElement.textContent = `${hour12} ${period}`;
 
     tempElement.textContent = `${Math.round(item.temperature)}°${
       selectedTempUnit === "celsius" ? "C" : "F"
     }`;
 
-    iconElement.style.backgroundImage = `url("${weatherIconPath(item.weatherCode)}")`;
+    iconElement.style.backgroundImage =
+      `url("${weatherIconPath(item.weatherCode)}")`;
 
     iconElement.style.backgroundSize = "contain";
     iconElement.style.backgroundRepeat = "no-repeat";
@@ -252,17 +261,21 @@ function showWeeklyForecast(daily) {
 
     dayElement.textContent = weekday;
 
-    iconElement.style.backgroundImage = `url("${weatherIconPath(daily.weather_code[index])}")`;
+    iconElement.style.backgroundImage =
+      `url("${weatherIconPath(daily.weather_code[index])}")`;
 
     iconElement.style.backgroundSize = "contain";
     iconElement.style.backgroundRepeat = "no-repeat";
     iconElement.style.backgroundPosition = "center";
 
-    const unitSymbol = selectedTempUnit === "celsius" ? "°C" : "°F";
+    const unitSymbol =
+      selectedTempUnit === "celsius" ? "°C" : "°F";
 
-    maxTemp.textContent = `${Math.round(daily.temperature_2m_max[index])}${unitSymbol}`;
+    maxTemp.textContent =
+      `${Math.round(daily.temperature_2m_max[index])}${unitSymbol}`;
 
-    minTemp.textContent = `${Math.round(daily.temperature_2m_min[index])}${unitSymbol}`;
+    minTemp.textContent =
+      `${Math.round(daily.temperature_2m_min[index])}${unitSymbol}`;
   });
 }
 
@@ -272,81 +285,96 @@ async function weather() {
   if (!city) return;
 
   try {
-    const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`;
+    cityName.textContent = "Loading weather...";
+
+    const geoUrl =
+      `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`;
 
     const geoResponse = await fetch(geoUrl);
+
+    if (!geoResponse.ok) {
+      throw new Error("Could not find the city.");
+    }
+
     const geoData = await geoResponse.json();
 
     if (!geoData.results || geoData.results.length === 0) {
-      alert("City not found!");
+      cityName.textContent = "City not found";
       return;
     }
 
     const location = geoData.results[0];
 
-    const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current_weather=true&temperature_unit=${selectedTempUnit}&wind_speed_unit=${selectedSpeedUnit}&timezone=auto`;
+    const apiUrl =
+      `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}` +
+      `&longitude=${location.longitude}` +
+      `&current=temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,precipitation,apparent_temperature` +
+      `&hourly=temperature_2m,weather_code` +
+      `&daily=weather_code,temperature_2m_max,temperature_2m_min` +
+      `&temperature_unit=${selectedTempUnit}` +
+      `&wind_speed_unit=${selectedSpeedUnit}` +
+      `&precipitation_unit=${selectedPrecipUnit}` +
+      `&timezone=auto&forecast_days=7`;
 
     const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      throw new Error("Could not load weather data.");
+    }
+
     const data = await response.json();
+    const current = data.current;
 
-    mainDegree.textContent = `${data.current_weather.temperature}°${
-      selectedTempUnit === "celsius" ? "C" : "F"
-    }`;
+    mainDegree.textContent =
+      `${current.temperature_2m}°${
+        selectedTempUnit === "celsius" ? "C" : "F"
+      }`;
 
-    cityName.textContent = `${location.name}, ${location.country}`;
+    cityName.textContent =
+      `${location.name}, ${location.country}`;
 
     const mainIcon = document.querySelector(".climate_img_main");
 
     if (mainIcon) {
-      mainIcon.style.backgroundImage = `url("${weatherIconPath(data.current_weather.weathercode)}")`;
+      mainIcon.style.backgroundImage =
+        `url("${weatherIconPath(current.weather_code)}")`;
+
       mainIcon.style.backgroundSize = "contain";
       mainIcon.style.backgroundRepeat = "no-repeat";
       mainIcon.style.backgroundPosition = "center";
     }
 
-    const forecastUrl = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=${selectedTempUnit}&timezone=auto&forecast_days=7`;
+    showWeeklyForecast(data.daily);
 
-    const forecastResponse = await fetch(forecastUrl);
-    const forecastData = await forecastResponse.json();
-
-    showWeeklyForecast(forecastData.daily);
-
-    const hourUrl = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&hourly=temperature_2m,weather_code&temperature_unit=${selectedTempUnit}&timezone=auto&forecast_days=7`;
-
-    const hourResponse = await fetch(hourUrl);
-    const hourData = await hourResponse.json();
-
-    hourlyForecast = hourData.hourly;
-
+    hourlyForecast = data.hourly;
     showHourlyForecast(dayName.textContent.trim());
 
-    const TempUrl = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=wind_speed_10m,relative_humidity_2m,precipitation,apparent_temperature&temperature_unit=${selectedTempUnit}&wind_speed_unit=${selectedSpeedUnit}&precipitation_unit=${selectedPrecipUnit}&timezone=auto`;
+    feelsLikeValue.textContent =
+      `${current.apparent_temperature}°${
+        selectedTempUnit === "celsius" ? "C" : "F"
+      }`;
 
-    const tempresponse = await fetch(TempUrl);
-    const tempdata = await tempresponse.json();
+    const speedUnitLabel = {
+      kmh: "km/h",
+      mph: "mph",
+      ms: "m/s",
+      kn: "kn",
+    }[selectedSpeedUnit];
 
-    feelsLikeValue.textContent = `${tempdata.current.apparent_temperature}°${
-      selectedTempUnit === "celsius" ? "C" : "F"
-    }`;
+    windValue.textContent =
+      `${current.wind_speed_10m} ${speedUnitLabel}`;
 
-    const speedUnitLabel =
-      selectedSpeedUnit === "kmh"
-        ? "km/h"
-        : selectedSpeedUnit === "mph"
-          ? "mph"
-          : selectedSpeedUnit === "ms"
-            ? "m/s"
-            : "kn";
+    precipValue.textContent =
+      `${current.precipitation} ${
+        selectedPrecipUnit === "mm" ? "mm" : "in"
+      }`;
 
-    windValue.textContent = `${tempdata.current.wind_speed_10m} ${speedUnitLabel}`;
+    humidValue.textContent =
+      `${current.relative_humidity_2m}%`;
 
-    precipValue.textContent = `${tempdata.current.precipitation} ${
-      selectedPrecipUnit === "mm" ? "mm" : "in"
-    }`;
-
-    humidValue.textContent = `${tempdata.current.relative_humidity_2m}%`;
   } catch (error) {
     console.error("Weather error:", error);
+    cityName.textContent = "Weather unavailable";
   }
 }
 
