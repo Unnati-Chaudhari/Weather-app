@@ -31,7 +31,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [solution URL](https://www.frontendmentor.io/solutions/weather-app-built-with-html-css-js-and-api-FX20qw98K-)
+- Solution URL: [solution URL](https://www.frontendmentor.io/solutions/weather-app-gsxnzo8twI)
 - Live Site URL: [live site URL](https://unnati-chaudhari.github.io/Weather-app/)
 
 ## My process
